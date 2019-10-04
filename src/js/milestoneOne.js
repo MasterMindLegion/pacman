@@ -1,22 +1,36 @@
 
 // =================== Classes
-
+let thisWidth = 0;
+let thisHeight = 0;
 // Create class Stage
 class Stage {
-  constructor() {
-    //this.background = background;
-    
+  constructor(tilesWidth, tilesHeight) {
+    this.tilesWidth= tilesWidth;
+    this.tilesHeight= tilesHeight;
+    //72 tiles 1 = 85px
+    // width 1024 px
+    // Height 51Opx
   }
   render() {
+    this.width = 85* this.tilesWidth;
+    this.height = 85 * this.tilesHeight;
+    this.moveWidth = this.width - 170;
+    this.moveHeight = this.height - 170;
     this.stageElement = document.createElement('div');
     this.stageElement.className = 'stage';
+    this.stageElement.style.width = `${this.width}px`;
+    this.stageElement.style.height = `${this.height}px`;
+    this.return();
   }
   mount(parent) {
     this.render();
     parent.appendChild(this.stageElement);
   }
+  return() {
+    thisWidth = this.moveWidth;
+    thisHeight = this.moveHeight;
+  }
 }
-
 // Create class Pacman
 class Pacman {
   constructor() {
@@ -38,16 +52,20 @@ class Pacman {
     this.pacmanOneTile = 0;
     this.leftPosition = 0;
     this.topPosition = 0;
+    
 
     //Add event for keyboard
     document.addEventListener('keydown', (event) => {
 
-
+      console.log(thisHeight)
+      console.log(thisWidth)
       //=================== Event for right arrow
       if(event.code === 'ArrowRight') {
         if(this.pacmanCounter === 1) {
-          if(this.leftPosition <= 850) {
-            console.log(this.leftPosition);
+          //850PX
+          if(this.leftPosition < this.width) {
+            console.log(thisHeight)
+            console.log(thisWidth)
             this.leftPosition += 85;
             this.pacmanElement.style.left = `${this.leftPosition}px`;
           }
@@ -57,8 +75,7 @@ class Pacman {
           console.log("counter 1");
      
         } else if (this.pacmanCounter === 2) {
-            if(this.leftPosition <= 850 ) {
-              console.log(this.leftPosition);
+            if(this.leftPosition <= thisWidth ) {
               this.leftPosition += 85;
               this.pacmanElement.style.left = `${this.leftPosition}px`;
             } 
@@ -75,7 +92,7 @@ class Pacman {
       if(event.code === 'ArrowLeft') {
         if(this.pacmanCounter === 1) {
 
-          if(this.leftPosition <= 935 && this.leftPosition > 0) {
+          if(this.leftPosition <= thisWidth && this.leftPosition > 0) {
             console.log("this.leftPosition");
             this.leftPosition -= 85;          
             this.pacmanElement.style.left = `${this.leftPosition}px`;
@@ -87,7 +104,7 @@ class Pacman {
          return  this.pacmanCounter   
           
         } else if (this.pacmanCounter === 2) {
-          if(this.leftPosition <= 935 && this.leftPosition > 0) {
+          if(this.leftPosition <= this.Width && this.leftPosition > 0) {
             console.log("this.leftPosition");
             this.leftPosition -= 85;          
             this.pacmanElement.style.left = `${this.leftPosition}px`;
@@ -106,7 +123,7 @@ class Pacman {
       if(event.code === 'ArrowUp') {
         if(this.pacmanCounter === 1) {
           if(this.topPosition > 0) {
-            console.log(this.topPosition);
+           
             this.topPosition -= 85;          
             this.pacmanElement.style.top = `${this.topPosition}px`;
           }
@@ -133,11 +150,10 @@ class Pacman {
        // Event Down
        if(event.code === 'ArrowDown') {
         if(this.pacmanCounter === 1) {
-          if(this.topPosition >= 0 && this.topPosition <= 340) {
+          if(this.topPosition >= 0 && this.topPosition <= thisHeight) {
             console.log(this.topPosition);
             this.topPosition += 85;          
             this.pacmanElement.style.top = `${this.topPosition}px`;
-            console.log(this.topPosition);
           }
 
           this.pacmanElement.style.backgroundPositionX = "0";
@@ -146,7 +162,7 @@ class Pacman {
           console.log("counter 1");
          return  this.pacmanCounter    
         } else if (this.pacmanCounter === 2) {
-          if(this.topPosition >= 0 && this.topPosition <= 340) {
+          if(this.topPosition >= 0 && this.topPosition <= thisHeight) {
             console.log(this.topPosition);
             this.topPosition += 85;          
             this.pacmanElement.style.top = `${this.topPosition}px`;
