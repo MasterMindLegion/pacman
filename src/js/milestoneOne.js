@@ -37,7 +37,7 @@ class Pacman {
     this.pacmanCounter = 1;
     this.pacmanOneTile = 0;
     this.leftPosition = 0;
-    this. Position = 0;
+    this.topPosition = 0;
 
     //Add event for keyboard
     document.addEventListener('keydown', (event) => {
@@ -105,6 +105,11 @@ class Pacman {
       //============== Event up 
       if(event.code === 'ArrowUp') {
         if(this.pacmanCounter === 1) {
+          if(this.topPosition > 0) {
+            console.log(this.topPosition);
+            this.topPosition -= 85;          
+            this.pacmanElement.style.top = `${this.topPosition}px`;
+          }
   
        
           this.pacmanElement.style.backgroundPositionX = "0";
@@ -113,6 +118,11 @@ class Pacman {
           console.log("counter 1");
          return  this.pacmanCounter    
         } else if (this.pacmanCounter === 2) {
+          if(this.topPosition > 0) {
+            console.log(this.topPosition);
+            this.topPosition -= 85;          
+            this.pacmanElement.style.top = `${this.topPosition}px`;
+          }
           this.pacmanElement.style.backgroundPositionX = "85px";
           this.pacmanElement.style.backgroundPositionY = "85px";
           console.log("counter 2");
@@ -123,7 +133,12 @@ class Pacman {
        // Event Down
        if(event.code === 'ArrowDown') {
         if(this.pacmanCounter === 1) {
-
+          if(this.topPosition >= 0 && this.topPosition <= 340) {
+            console.log(this.topPosition);
+            this.topPosition += 85;          
+            this.pacmanElement.style.top = `${this.topPosition}px`;
+            console.log(this.topPosition);
+          }
 
           this.pacmanElement.style.backgroundPositionX = "0";
           this.pacmanElement.style.backgroundPositionY = "170px";
@@ -131,6 +146,12 @@ class Pacman {
           console.log("counter 1");
          return  this.pacmanCounter    
         } else if (this.pacmanCounter === 2) {
+          if(this.topPosition >= 0 && this.topPosition <= 340) {
+            console.log(this.topPosition);
+            this.topPosition += 85;          
+            this.pacmanElement.style.top = `${this.topPosition}px`;
+            console.log(this.topPosition);
+          }
           this.pacmanElement.style.backgroundPositionX = "85px";
           this.pacmanElement.style.backgroundPositionY = "170px";
           console.log("counter 2");
