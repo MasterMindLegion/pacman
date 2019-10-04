@@ -2,19 +2,18 @@
 // =================== Classes
 let thisWidth = 0;
 let thisHeight = 0;
+let pacmanHeight = 0;
+let pacmanWidth = 0;
 // Create class Stage
 class Stage {
   constructor(tilesWidth, tilesHeight) {
     this.tilesWidth= tilesWidth;
     this.tilesHeight= tilesHeight;
-    //72 tiles 1 = 85px
-    // width 1024 px
-    // Height 51Opx
   }
   render() {
     this.width = 85* this.tilesWidth;
     this.height = 85 * this.tilesHeight;
-    this.moveWidth = this.width - 170;
+    this.moveWidth = this.width - 85;
     this.moveHeight = this.height - 170;
     this.stageElement = document.createElement('div');
     this.stageElement.className = 'stage';
@@ -40,6 +39,7 @@ class Pacman {
     this.pacmanElement = document.createElement('div');
     this.pacmanElement.className = 'entity entity--pac pacboy-active-light';
     this.update();
+    this.return();
   }
   mount(parent) {
     this.render();
@@ -57,8 +57,6 @@ class Pacman {
     //Add event for keyboard
     document.addEventListener('keydown', (event) => {
 
-      console.log(thisHeight)
-      console.log(thisWidth)
       //=================== Event for right arrow
       if(event.code === 'ArrowRight') {
         if(this.pacmanCounter === 1) {
@@ -75,7 +73,7 @@ class Pacman {
           console.log("counter 1");
      
         } else if (this.pacmanCounter === 2) {
-            if(this.leftPosition <= thisWidth ) {
+            if(this.leftPosition < thisWidth ) {
               this.leftPosition += 85;
               this.pacmanElement.style.left = `${this.leftPosition}px`;
             } 
@@ -122,13 +120,10 @@ class Pacman {
       //============== Event up 
       if(event.code === 'ArrowUp') {
         if(this.pacmanCounter === 1) {
-          if(this.topPosition > 0) {
-           
+          if(this.topPosition > 0) {          
             this.topPosition -= 85;          
             this.pacmanElement.style.top = `${this.topPosition}px`;
-          }
-  
-       
+          }      
           this.pacmanElement.style.backgroundPositionX = "0";
           this.pacmanElement.style.backgroundPositionY = "85px";
           this.pacmanCounter += 1;
@@ -177,6 +172,45 @@ class Pacman {
       }
       
     })
+  }
+  return() {
+    pacmanWidth = this.leftPosition;
+    pacmanHeight = this.topPosition;
+  }
+}
+
+console.log(pacmanHeight);
+console.log(pacmanWidth);
+
+
+// ======== Entities
+
+class Entity {
+
+  constructor(width, height) {
+    this.height = height;
+    this.width = width;
+  }
+ 
+  render() {
+    this.wallElement = document.createElement('div');
+    this.wallElement.className = 'entity entity--wall';
+    this.position();
+  }
+  mount(parent) {
+    this.render();
+    parent.appendChild(this.wallElement)
+  }
+
+  position() {
+    this.widthWall = this.width * 85;
+    this.heightWall = this.height * 85;
+    this.wallElement.style.left = `${this.widthWall}px`;
+    this.wallElement.style.top = `${this.heightWall}px`;
+    
+    if (this.widthWall == pacmanWidth && this.heightWall == pacmanHeight) {
+     console.log("same ")
+    }
   }
 }
 
